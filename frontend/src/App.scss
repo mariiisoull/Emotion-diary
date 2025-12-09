@@ -1,0 +1,85 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #E3DBF6 0%, #CDE8F6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  position: relative;
+}
+
+/* Верхняя панель */
+.navbar {
+  width: 100%;
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2A6FDB;
+}
+
+.loginBtn {
+  padding: 10px 22px;
+  border-radius: 50px;
+  background: #ffffff;
+  color: #2A6FDB;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.loginBtn:hover {
+  opacity: 0.85;
+}
+
+/* Центр */
+.centerContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -60px;
+}
+
+.title {
+  color: #2A6FDB;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Кнопка */
+.createBtn {
+  padding: 14px 34px;
+  background: #ffffff;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  transition: 0.25s ease-in-out;
+}
+
+.createBtn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Описание */
+.description {
+  font-size: 18px;
+  text-align: center;
+  color: #4B4B4B;
+  margin-bottom: 80px;
+  line-height: 1.4;
+}
