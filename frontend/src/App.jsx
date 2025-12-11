@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.scss';
 
+
+
+
+
 function App() {
   return (
     <div className="wrapper">
@@ -9,13 +13,13 @@ function App() {
       {/* Навбар */}
       <div className="navbar">
         <span className="logo">Emotion diary</span>
-        <Link to="/login" className="loginBtn">Войти</Link>
+        <Link to="/Login" className="loginBtn">Войти</Link>
       </div>
 
       {/* Центр */}
       <div className="centerContent">
         <h1 className="title">Ваш личный дневник эмоций</h1>
-        <Link to="/register" className="createBtn">Создать аккаунт</Link>
+        <Link to="/Register" className="createBtn">Создать аккаунт</Link>
       </div>
 
       {/* Текст снизу */}

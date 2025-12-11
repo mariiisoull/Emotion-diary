@@ -5,23 +5,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "Inter", sans-serif;
+  font-family: Arial; /* заменили на Arial */
   position: relative;
 }
 
 /* Верхняя панель */
 .navbar {
   width: 100%;
-  padding: 24px 40px;
+  padding: 24px 80px; /* добавили пространство по бокам */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .logo {
   font-size: 20px;
   font-weight: 600;
   color: #2A6FDB;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* добавили тень */
 }
 
 .loginBtn {
@@ -64,7 +66,8 @@
   border-radius: 50px;
   font-size: 16px;
   font-weight: 500;
-  color: #000;
+  color: #4B4B4B;
+
   text-decoration: none;
   border: none;
   transition: 0.25s ease-in-out;
