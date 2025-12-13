@@ -200,3 +200,134 @@
     }
   }
 }
+
+
+
+
+/* ========================
+   Общий фон модалки
+======================== */
+.calendar-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); // чуть темнее для контраста
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* ========================
+   Окно модалки эмоций
+======================== */
+.emotion-modal {
+  width: 300px;
+  height: 500px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-family: Arial, sans-serif;
+}
+
+/* ========================
+   Кнопка закрытия X
+======================== */
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+
+  &:hover {
+    color: #ff5555;
+    transform: scale(1.2);
+  }
+}
+
+/* ========================
+   Заголовок и выбранная эмоция
+======================== */
+.emotion-modal h3 {
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.chosen-emotion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+/* ========================
+   Текстовая область
+======================== */
+.emotion-modal textarea {
+  flex: 1;
+  resize: none;
+  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* ========================
+   Действия: сохранить и удалить
+======================== */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.save-btn,
+.delete-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+/* Сохранить */
+.save-btn {
+  background-color: #4caf50;
+  color: white;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+/* Удалить */
+.delete-btn {
+  background-color: #ef5350;
+  color: white;
+
+  &:hover {
+    background-color: #e53935;
+  }
+}

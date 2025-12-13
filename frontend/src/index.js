@@ -6,6 +6,8 @@ import App from './App';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Settings from './pages/Settings';
+import Settings from './pages/Chart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -17,6 +19,8 @@ root.render(
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/settings" element={<Settings/>}/>
+          <Route path="/settings" element={<Chart/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
