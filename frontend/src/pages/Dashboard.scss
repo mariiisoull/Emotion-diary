@@ -331,3 +331,43 @@
     background-color: #e53935;
   }
 }
+.add-tab-btn {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 10px 0;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+.additional-emotions-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.selected-emotions-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.modal-actions {
+  margin-top: auto; // фиксирует кнопки внизу
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}

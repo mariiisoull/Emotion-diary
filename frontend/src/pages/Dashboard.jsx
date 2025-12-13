@@ -41,9 +41,12 @@ function Dashboard() {
   /* =======================
      ЭМОЦИИ
   ======================= */
+  
   const [showEmotionModal, setShowEmotionModal] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState(null);
-  const [emotionNote, setEmotionNote] = useState("");
+  
+  const [showAddList, setShowAddList] = useState(false);
+
 
   const [emotionsByDate, setEmotionsByDate] = useState(() => {
     return JSON.parse(localStorage.getItem("emotions")) || {};
@@ -59,7 +62,6 @@ function Dashboard() {
 
   if (record) {
     setSelectedEmotion(record.emotion);
-    setEmotionNote(record.note);
     setShowEmotionModal(true);
   }
 };
@@ -141,9 +143,7 @@ function Dashboard() {
               key={e.text}
               onClick={() => {
                 setSelectedEmotion(e);  
-                setEmotionNote(
-                  emotionsByDate[selectedDayKey]?.note || ""
-                );
+              
                 setShowEmotionModal(true);
               }}
             >
@@ -159,7 +159,7 @@ function Dashboard() {
 {showEmotionModal && selectedEmotion && (
   <div className="calendar-popup">
     <div className="calendar-window emotion-modal">
-      {/* Кнопка закрытия */}
+      {/* Кнопка закрытия модалки */}
       <button
         className="modal-close-btn"
         onClick={() => setShowEmotionModal(false)}
@@ -175,63 +175,72 @@ function Dashboard() {
         <span>{selectedEmotion.text}</span>
       </div>
 
-      {/* Список дополнительных эмоций */}
-      <div className="additional-emotions">
-        {[
-          { emoji: "❤️", text: "любовь" },
-          { emoji: "💪", text: "гордость" },
-          { emoji: "🙏", text: "благодарность" },
-          { emoji: "😊", text: "радость" },
-          { emoji: "😇", text: "блаженство" },
-          { emoji: "🤩", text: "восхищение" },
-          { emoji: "😍", text: "очарованность" },
-          { emoji: "😢", text: "грусть" },
-          { emoji: "😔", text: "тоска" },
-          { emoji: "😞", text: "разочарование" },
-          { emoji: "😟", text: "сожаление" },
-          { emoji: "😒", text: "скука" },
-          { emoji: "😠", text: "зависть" },
-          { emoji: "😡", text: "злость" },
-          { emoji: "😰", text: "тревожность" },
-        ].map((e) => {
-          const isSelected =
-            emotionsByDate[selectedDayKey]?.additional?.some(
-              (item) => item.text === e.text
-            );
-          return (
-            <div
-              key={e.text}
-              className={`emotion-tag ${isSelected ? "selected" : ""}`}
-              onClick={() => {
-                const prev =
-                  emotionsByDate[selectedDayKey]?.additional || [];
-                let updatedList;
-                if (isSelected) {
-                  // удалить
-                  updatedList = prev.filter((item) => item.text !== e.text);
-                } else {
-                  updatedList = [...prev, e];
-                }
-                const updated = {
-                  ...emotionsByDate,
-                  [selectedDayKey]: {
-                    ...emotionsByDate[selectedDayKey],
-                    emotion: selectedEmotion,
-                    additional: updatedList,
-                  },
-                };
-                setEmotionsByDate(updated);
-                localStorage.setItem("emotions", JSON.stringify(updated));
-              }}
-            >
-              <span className="emoji">{e.emoji}</span> {e.text}
-            </div>
-          );
-        })}
-      </div>
+      {/* Вкладка "Добавить" */}
+      <button
+        className="add-tab-btn"
+        onClick={() => setShowAddList((prev) => !prev)}
+      >
+        Добавить
+      </button>
 
-      {/* Выбранные эмоции */}
-      <div className="selected-emotions">
+      {/* Список дополнительных эмоций */}
+      {showAddList && (
+        <div className="additional-emotions-block">
+          {[
+            { emoji: "❤️", text: "любовь" },
+            { emoji: "💪", text: "гордость" },
+            { emoji: "🙏", text: "благодарность" },
+            { emoji: "😊", text: "радость" },
+            { emoji: "😇", text: "блаженство" },
+            { emoji: "🤩", text: "восхищение" },
+            { emoji: "😍", text: "очарованность" },
+            { emoji: "😢", text: "грусть" },
+            { emoji: "😔", text: "тоска" },
+            { emoji: "😞", text: "разочарование" },
+            { emoji: "😟", text: "сожаление" },
+            { emoji: "😒", text: "скука" },
+            { emoji: "😠", text: "зависть" },
+            { emoji: "😡", text: "злость" },
+            { emoji: "😰", text: "тревожность" },
+          ].map((e) => {
+            const isSelected =
+              emotionsByDate[selectedDayKey]?.additional?.some(
+                (item) => item.text === e.text
+              );
+            return (
+              <div
+                key={e.text}
+                className={`emotion-tag ${isSelected ? "selected" : ""}`}
+                onClick={() => {
+                  const prev =
+                    emotionsByDate[selectedDayKey]?.additional || [];
+                  let updatedList;
+                  if (isSelected) {
+                    updatedList = prev.filter((item) => item.text !== e.text);
+                  } else {
+                    updatedList = [...prev, e];
+                  }
+                  const updated = {
+                    ...emotionsByDate,
+                    [selectedDayKey]: {
+                      ...emotionsByDate[selectedDayKey],
+                      emotion: selectedEmotion,
+                      additional: updatedList,
+                    },
+                  };
+                  setEmotionsByDate(updated);
+                  localStorage.setItem("emotions", JSON.stringify(updated));
+                }}
+              >
+                <span className="emoji">{e.emoji}</span> {e.text}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Сохранённые эмоции */}
+      <div className="selected-emotions-block">
         {(emotionsByDate[selectedDayKey]?.additional || []).map((e) => (
           <div key={e.text} className="selected-tag">
             <span className="emoji">{e.emoji}</span> {e.text}
@@ -239,7 +248,7 @@ function Dashboard() {
         ))}
       </div>
 
-      {/* Действия */}
+      {/* Действия (фиксированы внизу) */}
       <div className="modal-actions">
         <button
           className="save-btn"
@@ -278,10 +287,10 @@ function Dashboard() {
 
       {/* ===== Нижнее меню ===== */}
       <div className="bottom-nav">
-        <div className="nav-btn">
+        <div className="nav-btn"onClick={() => navigate("/tegs")} >
           <FiEdit size={24} />
         </div>
-        <div className="nav-btn active" onClick={() => navigate("/tegs")}>
+        <div className="nav-btn active" >
           <FiHome size={24} />
         </div>
         <div className="nav-btn" onClick={() => navigate("/chart")}>
