@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Chart from './pages/Chart';
+import Tegs from './pages/Tegs';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -21,6 +22,7 @@ root.render(
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<Settings/>}/>
           <Route path="/chart" element={<Chart/>}/>
+          <Route path="/tegs" element={<Tegs/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

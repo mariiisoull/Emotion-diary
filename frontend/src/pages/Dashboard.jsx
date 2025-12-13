@@ -155,6 +155,7 @@ function Dashboard() {
       </div>
 
       {/* ===== Модальное окно эмоции ===== */}
+
 {showEmotionModal && selectedEmotion && (
   <div className="calendar-popup">
     <div className="calendar-window emotion-modal">
@@ -168,32 +169,81 @@ function Dashboard() {
 
       <h3>{format(selectedDate, "dd.MM.yyyy")}</h3>
 
+      {/* Основная выбранная эмоция */}
       <div className="chosen-emotion">
         <span className="emoji">{selectedEmotion.emoji}</span>
         <span>{selectedEmotion.text}</span>
       </div>
 
-      <textarea
-        placeholder="Опишите своё состояние..."
-        value={emotionNote}
-        onChange={(e) => setEmotionNote(e.target.value)}
-      />
+      {/* Список дополнительных эмоций */}
+      <div className="additional-emotions">
+        {[
+          { emoji: "❤️", text: "любовь" },
+          { emoji: "💪", text: "гордость" },
+          { emoji: "🙏", text: "благодарность" },
+          { emoji: "😊", text: "радость" },
+          { emoji: "😇", text: "блаженство" },
+          { emoji: "🤩", text: "восхищение" },
+          { emoji: "😍", text: "очарованность" },
+          { emoji: "😢", text: "грусть" },
+          { emoji: "😔", text: "тоска" },
+          { emoji: "😞", text: "разочарование" },
+          { emoji: "😟", text: "сожаление" },
+          { emoji: "😒", text: "скука" },
+          { emoji: "😠", text: "зависть" },
+          { emoji: "😡", text: "злость" },
+          { emoji: "😰", text: "тревожность" },
+        ].map((e) => {
+          const isSelected =
+            emotionsByDate[selectedDayKey]?.additional?.some(
+              (item) => item.text === e.text
+            );
+          return (
+            <div
+              key={e.text}
+              className={`emotion-tag ${isSelected ? "selected" : ""}`}
+              onClick={() => {
+                const prev =
+                  emotionsByDate[selectedDayKey]?.additional || [];
+                let updatedList;
+                if (isSelected) {
+                  // удалить
+                  updatedList = prev.filter((item) => item.text !== e.text);
+                } else {
+                  updatedList = [...prev, e];
+                }
+                const updated = {
+                  ...emotionsByDate,
+                  [selectedDayKey]: {
+                    ...emotionsByDate[selectedDayKey],
+                    emotion: selectedEmotion,
+                    additional: updatedList,
+                  },
+                };
+                setEmotionsByDate(updated);
+                localStorage.setItem("emotions", JSON.stringify(updated));
+              }}
+            >
+              <span className="emoji">{e.emoji}</span> {e.text}
+            </div>
+          );
+        })}
+      </div>
 
+      {/* Выбранные эмоции */}
+      <div className="selected-emotions">
+        {(emotionsByDate[selectedDayKey]?.additional || []).map((e) => (
+          <div key={e.text} className="selected-tag">
+            <span className="emoji">{e.emoji}</span> {e.text}
+          </div>
+        ))}
+      </div>
+
+      {/* Действия */}
       <div className="modal-actions">
         <button
           className="save-btn"
-          onClick={() => {
-            const updated = {
-              ...emotionsByDate,
-              [selectedDayKey]: {
-                emotion: selectedEmotion,
-                note: emotionNote,
-              },
-            };
-            setEmotionsByDate(updated);
-            localStorage.setItem("emotions", JSON.stringify(updated));
-            setShowEmotionModal(false);
-          }}
+          onClick={() => setShowEmotionModal(false)}
         >
           Сохранить
         </button>
@@ -231,7 +281,7 @@ function Dashboard() {
         <div className="nav-btn">
           <FiEdit size={24} />
         </div>
-        <div className="nav-btn active">
+        <div className="nav-btn active" onClick={() => navigate("/tegs")}>
           <FiHome size={24} />
         </div>
         <div className="nav-btn" onClick={() => navigate("/chart")}>
