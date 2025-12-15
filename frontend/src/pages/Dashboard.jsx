@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { getWeekDays } from "../utils/getWeek";
 import { FiX, FiTrash2 } from "react-icons/fi";
 
+
 import {
   FiCalendar,
   FiSettings,
@@ -63,6 +64,94 @@ function Dashboard() {
       setShowEmotionModal(false);
     }
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // =======================
+// РЕКОМЕНДАЦИИ
+// =======================
+  const [recommendations, setRecommendations] = useState([]);
+  const [selectedMaterial, setSelectedMaterial] = useState(null);
+
+
+  useEffect(() => {
+  const fetchRecommendations = async () => {
+    const token = localStorage.getItem("token");
+    const currentEmotions = [
+      selectedEmotion?.text,
+      ...(emotionsByDate[selectedDayKey]?.additional?.map(e => e.text) || []),
+    ];
+
+    if (currentEmotions.length === 0) {
+      setRecommendations([]);
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/recommendations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ emotions: currentEmotions }),
+      });
+
+      const data = await res.json();
+      if (data.success) setRecommendations(data.materials); // <- здесь
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchRecommendations();
+}, [selectedEmotion, emotionsByDate, selectedDayKey]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // =======================
   // SAVE / DELETE EMOTION
@@ -215,6 +304,140 @@ function Dashboard() {
         </div>
       </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div className="recs-card" style={{ margin: "0 200px", height: "300px" }}>
+  <div className="recs-title">Рекомендации для вас</div>
+  <div className="recs-cards-row">
+    {(!recommendations || recommendations.length === 0) && (
+      <p>Нет рекомендаций для выбранных эмоций</p>
+    )}
+    {recommendations?.map((item) => (
+      <div
+        key={item._id}
+        className="rec-box"
+        onClick={() => setSelectedMaterial(item)}
+      >
+        {item.type === "article" ? (
+          <div
+            className="rec-cover-text"
+            style={{
+              backgroundColor: "#E3F2FD",
+              height: "150px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "10px",
+              textAlign: "center",
+              padding: "10px",
+            }}
+          >
+            {item.title}
+          </div>
+        ) : (
+          <iframe
+            width="100%"
+            height="150"
+            src={item.url}
+            title={item.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        )}
+        <div className="rec-title">{item.title}</div>
+      </div>
+    ))}
+  </div>
+</div>
+
+{/* Модальное окно материала */}
+{selectedMaterial && (
+  <div className="material-popup">
+    <div className="material-window">
+      <button
+        className="material-close-btn"
+        onClick={() => setSelectedMaterial(null)}
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        <FiX size={20} />
+      </button>
+
+      <h3>{selectedMaterial.title}</h3>
+
+      {selectedMaterial.type === "article" ? (
+        <div className="material-content">
+          <p>{selectedMaterial.content}</p>
+        </div>
+      ) : (
+        <div className="material-content">
+          <iframe
+            width="100%"
+            height="300"
+            src={selectedMaterial.url}
+            title={selectedMaterial.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {/* Модальное окно эмоции */}
       {showEmotionModal && selectedEmotion && (
         <div className="calendar-popup">
@@ -237,21 +460,25 @@ function Dashboard() {
             {showAddList && (
               <div className="additional-emotions-block">
                 {[
-                  { emoji: "❤️", text: "любовь" },
-                  { emoji: "💪", text: "гордость" },
-                  { emoji: "🙏", text: "благодарность" },
-                  { emoji: "😊", text: "радость" },
-                  { emoji: "😇", text: "блаженство" },
-                  { emoji: "🤩", text: "восхищение" },
-                  { emoji: "😍", text: "очарованность" },
-                  { emoji: "😢", text: "грусть" },
-                  { emoji: "😔", text: "тоска" },
-                  { emoji: "😞", text: "разочарование" },
-                  { emoji: "😟", text: "сожаление" },
-                  { emoji: "😒", text: "скука" },
-                  { emoji: "😠", text: "зависть" },
-                  { emoji: "😡", text: "злость" },
-                  { emoji: "😰", text: "тревожность" },
+                 { emoji: "❤️", text: "любовь" },
+                 { emoji: "💪", text: "гордость" },
+                 { emoji: "😄", text: "счастье" },
+                 { emoji: "🙏", text: "благодарность" },
+                 { emoji: "😊", text: "радость" },
+                 { emoji: "😇", text: "блаженство" },
+                 { emoji: "🤩", text: "восхищение" },
+                 { emoji: "😍", text: "очарованность" },
+                 { emoji: "😢", text: "грусть" },
+                 { emoji: "😞", text: "разочарование" },
+                 { emoji: "😟", text: "сожаление" },
+                 { emoji: "😒", text: "скука" },
+                 { emoji: "😠", text: "зависть" },
+                 { emoji: "😡", text: "злость" },
+                 { emoji: "😰", text: "тревожность" },
+                 { emoji: "😴", text: "усталость" },
+                 { emoji: "😤", text: "раздражительность" },
+                 { emoji: "😱", text: "страх" },
+                 { emoji: "😳", text: "стыд" }
                 ].map((e) => {
                   const isSelected = emotionsByDate[selectedDayKey]?.additional?.some(
                     (item) => item.text === e.text
@@ -303,6 +530,12 @@ function Dashboard() {
           </div>
         </div>
       )}
+
+
+
+
+
+
 
       {/* Нижнее меню */}
       <div className="bottom-nav">

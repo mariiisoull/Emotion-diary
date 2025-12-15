@@ -4,6 +4,8 @@ import cors from 'cors';
 import authRoutes from './routes/auth.js';
 
 import emotionsRoutes from "./routes/emotions.js";
+
+import recommendationsRoutes from './routes/recommendations.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -23,3 +25,5 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 app.use("/api/emotions", emotionsRoutes);
+
+app.use('/api/recommendations', recommendationsRoutes);
