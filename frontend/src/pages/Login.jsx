@@ -29,10 +29,15 @@ function Login() {
       console.log('Ответ сервера:', data);
 
       if (data.success) {
-        // Сохраняем _id пользователя как токен
-        localStorage.setItem('token', data.message);
-        navigate('/dashboard'); // Переход на Dashboard
-      } else {
+  // ✅ сохраняем JWT
+  localStorage.setItem('token', data.token);
+
+  // (необязательно, но удобно)
+  localStorage.setItem('userId', data.userId);
+
+  navigate('/dashboard');
+}
+ else {
         alert(data.message || 'Неверный логин или пароль');
       }
     } catch (err) {

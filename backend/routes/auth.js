@@ -57,7 +57,12 @@ router.post('/login', async (req, res) => {
     );
 
    // Возвращаем _id пользователя как "токен"
-return res.json({ success: true, message: user._id });
+return res.json({
+  success: true,
+  token,
+  userId: user._id
+});
+
 
 
   } catch (err) {
