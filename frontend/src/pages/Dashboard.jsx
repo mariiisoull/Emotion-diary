@@ -543,6 +543,7 @@ function Dashboard() {
           <FiEdit size={24} />
         </div>
         <div className="nav-btn active">
+
           <FiHome size={24} />
         </div>
         <div className="nav-btn" onClick={() => navigate("/chart")}>

@@ -1,0 +1,327 @@
+/* Tegs.scss */
+
+// --- Переменные и Миксины ---
+$bg-gradient: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 50%, #f8bbd0 100%);
+$glass-bg: rgba(255, 255, 255, 0.65);
+$glass-border: 1px solid rgba(255, 255, 255, 0.6);
+$shadow-soft: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+$primary-color: #2d3436;
+$text-secondary: #636e72;
+
+// Миксин для эффекта стекла
+@mixin glass-effect {
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: $glass-border;
+  box-shadow: $shadow-soft;
+}
+
+// --- Основные стили ---
+.journal-page {
+  min-height: 100vh;
+  background: $bg-gradient;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: $primary-color;
+
+  // Шапка
+  .header {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .back-btn {
+        background: rgba(255,255,255,0.5);
+        border: none;
+        padding: 10px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover { background: white; }
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+      }
+      p {
+        margin: 0;
+        color: $text-secondary;
+        font-size: 0.9rem;
+      }
+    }
+
+    .header-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-grow: 1;
+      max-width: 500px;
+      justify-content: flex-end;
+
+      .search-wrapper {
+        position: relative;
+        flex-grow: 1;
+        
+        svg {
+          position: absolute;
+          left: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: $text-secondary;
+        }
+
+        input {
+          width: 100%;
+          padding: 14px 14px 14px 45px;
+          border: none;
+          border-radius: 20px;
+          background: rgba(255,255,255,0.6);
+          backdrop-filter: blur(5px);
+          font-size: 1rem;
+          outline: none;
+          transition: 0.3s;
+          
+          &:focus {
+            background: white;
+            box-shadow: 0 0 0 3px rgba(225, 190, 231, 0.5);
+          }
+        }
+      }
+
+      .add-btn {
+        background: #2d3436;
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        border-radius: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+        &:hover { transform: scale(1.05); }
+        &:active { transform: scale(0.95); }
+      }
+    }
+  }
+
+  // Сетка карточек
+  .notes-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem;
+      color: $text-secondary;
+      font-size: 1.2rem;
+    }
+
+    .note-card {
+      @include glass-effect;
+      padding: 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.5); // Дефолтный фон
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
+        .delete-btn { opacity: 1; }
+      }
+
+      // Цветовые вариации карточек
+      &.color-white { background: rgba(255, 255, 255, 0.7); }
+      &.color-pink { background: rgba(255, 228, 235, 0.7); border-color: rgba(255, 192, 203, 0.5); }
+      &.color-blue { background: rgba(227, 242, 253, 0.7); border-color: rgba(187, 222, 251, 0.5); }
+      &.color-green { background: rgba(232, 245, 233, 0.7); border-color: rgba(200, 230, 201, 0.5); }
+      &.color-yellow { background: rgba(255, 253, 231, 0.7); border-color: rgba(255, 249, 196, 0.5); }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        
+        .date {
+          font-size: 0.8rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #90a4ae;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .delete-btn {
+          opacity: 0; // Скрыта по умолчанию
+          background: white;
+          border: none;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ef5350;
+          cursor: pointer;
+          transition: 0.2s;
+          
+          &:hover { background: #ffebee; }
+          // На мобильных показываем всегда
+          @media (max-width: 768px) { opacity: 1; }
+        }
+      }
+
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.25rem;
+        color: #37474f;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #546e7a;
+        // Обрезка текста (3 строки)
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+
+  // --- Модальное окно ---
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+
+    .modal-content {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+
+      .modal-header {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 { margin: 0; font-size: 1.2rem; }
+        .close-btn {
+          background: #f5f5f5;
+          border: none;
+          padding: 8px;
+          border-radius: 50%;
+          cursor: pointer;
+          &:hover { background: #e0e0e0; }
+        }
+      }
+
+      .modal-body {
+        padding: 2rem;
+
+        .color-picker {
+          display: flex;
+          gap: 12px;
+          margin-bottom: 1.5rem;
+
+          .color-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+            
+            &.active { 
+              transform: scale(1.2); 
+              border-color: #333; 
+            }
+          }
+        }
+
+        .input-title {
+          width: 100%;
+          font-size: 1.5rem;
+          font-weight: 700;
+          border: none;
+          outline: none;
+          margin-bottom: 1rem;
+          &::placeholder { color: #d1d5db; }
+        }
+
+        .input-text {
+          width: 100%;
+          min-height: 200px;
+          font-size: 1.1rem;
+          line-height: 1.6;
+          border: none;
+          outline: none;
+          resize: none;
+          color: #4b5563;
+        }
+      }
+
+      .modal-footer {
+        padding: 1.5rem 2rem;
+        background: #f9fafb;
+        display: flex;
+        justify-content: flex-end;
+
+        .save-btn {
+          background: #2d3436;
+          color: white;
+          border: none;
+          padding: 12px 32px;
+          border-radius: 16px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          
+          &:disabled { opacity: 0.5; cursor: not-allowed; }
+          &:hover:not(:disabled) { background: black; }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
