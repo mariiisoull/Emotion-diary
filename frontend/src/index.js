@@ -10,6 +10,10 @@ import Settings from './pages/Settings';
 import Chart from './pages/Chart';
 import Tegs from './pages/Tegs';
 
+import Profile from './pages/Profile';
+import Pincode from './pages/Pincode';
+import Notification from './pages/Notification';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -23,6 +27,12 @@ root.render(
         <Route path="/settings" element={<Settings/>}/>
           <Route path="/chart" element={<Chart/>}/>
           <Route path="/tegs" element={<Tegs/>}/>
+
+          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/pincode" element={<Pincode/>}/>
+          <Route path="/notification" element={<Notification/>}/>
+
+    
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

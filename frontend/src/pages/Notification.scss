@@ -1,0 +1,140 @@
+.notification-page {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #e7e8ff, #d0e7ff, #f5d6ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Arial", sans-serif;
+
+  .notification-content {
+    width: 300px;
+        height: 500px;
+
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+
+    /* Header */
+    .notification-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+
+      h1 {
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0;
+        flex: 1;
+        text-align: center;
+      }
+
+      .back-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #333;
+        transition: 0.2s;
+
+        &:hover {
+          color: #7a7cff;
+        }
+      }
+    }
+
+    /* Body */
+    .notification-body {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .notification-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f7f7f7;
+        padding: 12px 14px;
+        border-radius: 14px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    /* Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 22px;
+
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background-color: #ccc;
+        border-radius: 22px;
+        transition: 0.2s;
+
+        &::before {
+          content: "";
+          position: absolute;
+          height: 18px;
+          width: 18px;
+          left: 2px;
+          bottom: 2px;
+          background-color: white;
+          border-radius: 50%;
+          transition: 0.2s;
+        }
+      }
+
+      input:checked + .slider {
+        background-color: #7a7cff;
+      }
+
+      input:checked + .slider::before {
+        transform: translateX(20px);
+      }
+    }
+  }
+}
+
+
+.test-btn {
+  width: 100%;
+  padding: 6px 0;
+  margin-top: 6px;
+  background: #2A6FDB;           // красивый фиолетовый градиент можно заменить
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    background: #5750d4;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background: #4740aa;
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
