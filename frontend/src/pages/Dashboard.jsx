@@ -24,6 +24,27 @@ function Dashboard() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) navigate("/login");
+  
+
+
+
+
+
+      // Проверяем, включён ли PIN
+  const pincodeEnabled = JSON.parse(localStorage.getItem("pincodeEnabled"));
+  const savedPin = localStorage.getItem("pincode");
+  const pinVerified = localStorage.getItem("pinVerified");
+
+  if (pincodeEnabled && savedPin && !pinVerified) {
+    navigate("/pincodecheck");
+  }
+
+
+
+
+
+
+    
   }, [navigate]);
 
   // =======================

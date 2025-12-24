@@ -13,7 +13,7 @@ import Tegs from './pages/Tegs';
 import Profile from './pages/Profile';
 import Pincode from './pages/Pincode';
 import Notification from './pages/Notification';
-
+import PincodeCheck from './pages/PincodeCheck';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -31,6 +31,11 @@ root.render(
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/pincode" element={<Pincode/>}/>
           <Route path="/notification" element={<Notification/>}/>
+          <Route path="/pincodecheck" element={<PincodeCheck/>}/>
+
+
+          
+
 
     
       </Routes>

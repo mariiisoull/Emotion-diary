@@ -35,7 +35,15 @@ function Login() {
   // (необязательно, но удобно)
   localStorage.setItem('userId', data.userId);
 
-  navigate('/dashboard');
+
+  const pincodeEnabled = JSON.parse(localStorage.getItem("pincodeEnabled"));
+const savedPin = localStorage.getItem("pincode");
+
+if (pincodeEnabled && savedPin) {
+  navigate("/pincodecheck");   // ← СЮДА
+} else {
+  navigate("/dashboard");       // ← как раньше
+}
 }
  else {
         alert(data.message || 'Неверный логин или пароль');
